@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
+import "cropperjs/dist/cropper.css";
+
 ReactDOM.render(
   <BrowserRouter>
     <App />

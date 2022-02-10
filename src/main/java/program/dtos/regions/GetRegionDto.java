@@ -3,6 +3,7 @@ package program.dtos.regions;
 import lombok.Data;
 
 @Data
-public class AddRegionDto {
+public class GetRegionDto {
+    private int id;
     private String name;
 }

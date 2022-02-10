@@ -1,24 +1,27 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import HomePage from './components/HomePage';
-import DefaultLayout from './components/containers/DefaultLayout';
+import { Route, Routes, useRoutes } from 'react-router-dom';
+import routes from "./routes"
 
 function App() {
+  let element = useRoutes(routes)
   return (
-    <Routes>
-      <Route path="/" element={<DefaultLayout />}>
-        <Route index element={<HomePage />} />
+    <>
+      {element}
+    </>
+    //   <Routes>
+    //     <Route path="/" element={<DefaultLayout />}>
+    //       <Route index element={<HomePage />} />
 
-      </Route>
-      {/* <Route element={<AuthLayout />}>
-        <Route path="/auth/login" element={<LogIn />} />
-        <Route path="/auth/signup" element={<SignUp />} />
+    //     </Route>
+    //   <Route element={<AuthLayout />}>
+    //       <Route path="/auth/login" element={<LogIn />} />
+    //       <Route path="/auth/signup" element={<SignUp />} />
 
-      </Route> */}
-      {/* <Route path="*" element={<NotFound />} /> */}
-    </Routes>
+    //     </Route>
+    //  <Route path="*" element={<NotFound />} /> 
+    //  </Routes>
   );
 }
 

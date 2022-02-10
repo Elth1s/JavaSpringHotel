@@ -6,9 +6,11 @@ import { ArrowUpward } from "@mui/icons-material";
 
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router";
-import Header from "./Header";
 
-const DefaultLayout = () => {
+import Header from "./Header";
+import BreadCrumbs from "./Breadcrumbs";
+
+const DefaultLayout: React.FC = () => {
     const [showButton, setShowButton] = useState(false);
 
     useEffect(() => {
@@ -32,6 +34,7 @@ const DefaultLayout = () => {
         <>
             <Header />
             <Container sx={{ maxWidth: { xl: "xl", lg: "lg", md: "md" } }} >
+                <BreadCrumbs />
                 <Outlet />
                 {showButton && (
                     <IconButton aria-label="edit" sx={{ border: 2, borderColor: "#45A29E", borderRadius: 3, color: "#f1f1f1" }} onClick={scrollToTop} style={{ position: "fixed", bottom: "20px", right: "20px" }}>
