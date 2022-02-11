@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import Cropper from "cropperjs";
 
-import { forwardRef, useRef, useState } from "react"
+import { forwardRef, useEffect, useRef, useState } from "react"
 import { Link as RouterLink } from 'react-router-dom';
 import CropperDialog from "../comon/CropperDialog/CropperDialog";
 
@@ -52,9 +52,14 @@ const Home: React.FC = () => {
     const [fileSelected, setFileSelected] = useState<string>("https://www.phoca.cz/images/projects/phoca-download-r.png")
     const [cropperObj, setCropperObj] = useState<Cropper>();
     const imgRef = useRef<HTMLImageElement>(null);
+    const prevRef = useRef<HTMLDivElement>();
 
     const [open, setOpen] = useState(true);
     const [isCropperDialogOpen, setIsCropperDialogOpen] = useState(false);
+
+    useEffect(() => {
+
+    }, [prevRef]);
 
     const handleClick = () => {
         setOpen((prevOpen) => !prevOpen);
@@ -66,6 +71,7 @@ const Home: React.FC = () => {
                 aspectRatio: 1 / 1,
                 viewMode: 1,
                 dragMode: 'move',
+                preview: prevRef.current,
             });
             cropper.replace(url);
             setCropperObj(cropper);
@@ -116,12 +122,7 @@ const Home: React.FC = () => {
                     <ListItemLink to="/spam" />
                 </List>
             </Box>
-            <Box
-                sx={{
-                    mt: 1,
-                }}
-                component="main"
-            >
+            <Box sx={{ mt: 1, }}            >
                 <label htmlFor="Image">
                     <img
                         src={fileSelected}
@@ -133,6 +134,7 @@ const Home: React.FC = () => {
             <CropperDialog
                 Transition={Transition}
                 imgRef={imgRef}
+                preview={prevRef}
                 modalSave={cropperDialogSave}
                 isDialogOpen={isCropperDialogOpen}
                 modalClose={cropperDialogClose}

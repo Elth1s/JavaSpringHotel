@@ -5,19 +5,24 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
+    Grid,
     IconButton,
+    Paper
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import { LegacyRef } from "react";
+
+import { LegacyRef, MutableRefObject } from "react";
+
 interface ICropperDialog {
     isDialogOpen: boolean,
     Transition: any,
     modalClose: any,
     imgRef: LegacyRef<HTMLImageElement>,
+    preview: MutableRefObject<HTMLDivElement | undefined>,
     image: string,
-    modalSave: any
+    modalSave: any,
 }
-const CropperDialog: React.FC<ICropperDialog> = ({ isDialogOpen, Transition, modalClose, imgRef, image, modalSave }) => {
+const CropperDialog: React.FC<ICropperDialog> = ({ isDialogOpen, Transition, modalClose, imgRef, image, modalSave, preview }) => {
     return (
         <Dialog
             open={isDialogOpen}
@@ -51,15 +56,29 @@ const CropperDialog: React.FC<ICropperDialog> = ({ isDialogOpen, Transition, mod
                     <Close />
                 </IconButton>
             </DialogTitle>
-            <DialogContent dividers sx={{ borderColor: '#45A29E' }}>
-
-                <Box sx={{ height: "500px" }}>
-                    <img ref={imgRef}
-                        alt="SelectedImage"
-                        src={image}
-                        style={{ width: "100%", display: "block" }} />
-                </Box>
-
+            <DialogContent dividers sx={{ borderColor: '#45A29E' }} >
+                <Grid container rowSpacing={{ xs: 3 }} columnSpacing={{ xs: 3 }}>
+                    <Grid item lg={9} xs={12} sx={{ height: "475px" }}>
+                        <Paper>
+                            <img ref={imgRef}
+                                alt="SelectedImage"
+                                src={image}
+                                style={{ width: "100%", height: "450px", display: "block" }} />
+                        </Paper>
+                    </Grid>
+                    <Grid item lg={3} xs={12}>
+                        <Paper sx={{ backgroundColor: "#18181b" }} elevation={0} >
+                            <div ref={preview as LegacyRef<HTMLDivElement>}
+                                style={{
+                                    width: "170px",
+                                    height: "170px",
+                                    overflow: "hidden",
+                                    borderRadius: "7px",
+                                }}>
+                            </div>
+                        </Paper>
+                    </Grid>
+                </Grid>
             </DialogContent>
             <DialogActions>
                 <Button autoFocus size="medium"
