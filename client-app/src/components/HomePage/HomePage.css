@@ -1,0 +1,6 @@
+.css-1scal0h-MuiPaginationItem-root{
+    color: rgb(85, 252, 241) !important;
+}
+.MuiPaginationItem-root.Mui-selected{
+    background-color: rgba(85, 252, 241, 0.13) !important;
+}
