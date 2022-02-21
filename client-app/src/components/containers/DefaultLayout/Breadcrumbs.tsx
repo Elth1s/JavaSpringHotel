@@ -13,6 +13,10 @@ const breadcrumbNameMap: any = {
     '/trash': 'Trash',
     '/spam': 'Spam',
     '/drafts': 'Drafts',
+    '/regions': "Regions",
+    '/regions/create': "Create",
+    '/hotels': "Hotels",
+    '/hotels/create': "Create"
 };
 
 const LinkRouter: React.FC<any> = (props) => <Link {...props} component={RouterLink} />;

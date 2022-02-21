@@ -79,6 +79,24 @@ const Header = () => {
                         >
                             Hotel
                         </Typography>
+                        <Typography
+                            component={Link} to="/regions/create"
+                            variant="h6"
+                            noWrap
+                            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+                            style={{ textDecoration: 'none', color: '#55FCF1' }}
+                        >
+                            Create region
+                        </Typography>
+                        <Typography
+                            component={Link} to="/hotels/create"
+                            variant="h6"
+                            noWrap
+                            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+                            style={{ textDecoration: 'none', color: '#55FCF1' }}
+                        >
+                            Create hotel
+                        </Typography>
                         <Box sx={{ flexGrow: 1 }} />
 
 

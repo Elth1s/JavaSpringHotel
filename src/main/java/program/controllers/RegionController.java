@@ -9,6 +9,7 @@ import program.dtos.regions.RegionDto;
 import program.entities.Region;
 import program.mapper.RegionMapper;
 import program.repositories.RegionRepository;
+import program.storage.StorageService;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class RegionController {
     private final RegionRepository regionRepository;
     private final RegionMapper regionMapper;
+    private final StorageService storageService;
 
     @GetMapping("/get-all")
     public List<GetRegionDto> getAll() {
@@ -28,8 +30,15 @@ public class RegionController {
     }
 
     @PostMapping("/create")
-    public Region create(RegionDto dto) {
+    public Region create(@RequestBody RegionDto dto) {
         Region newRegion = regionMapper.RegionDtoToRegion(dto);
+
+        try {
+            String image = storageService.save(dto.getBase64());
+            newRegion.setImage(image);
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
         regionRepository.save(newRegion);
         return newRegion;
     }

@@ -11,12 +11,11 @@ import program.dtos.regions.GetRegionDto;
 import program.dtos.regions.RegionDto;
 import program.entities.Region;
 import program.entities.User;
-import program.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Tag(name = "User")
+/*@Tag(name = "User")
 @RestController
 @RequestMapping(path = "api/user")
 @RequiredArgsConstructor
@@ -33,4 +32,4 @@ public class UserController {
         return list;
     }
 
-}
+}*/

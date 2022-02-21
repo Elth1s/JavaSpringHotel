@@ -1,11 +1,11 @@
 package program.dtos.cities;
 
 import lombok.Data;
-import program.dtos.regions.GetRegionDto;
+import program.dtos.regions.RegionDto;
 
 @Data
 public class GetCityDto {
     private int id;
     private String name;
-    private GetRegionDto region;
+    private RegionDto region;
 }

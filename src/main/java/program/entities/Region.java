@@ -17,6 +17,9 @@ public class Region {
     @Column(length = 200, nullable = false)
     private String name;
 
+    @Column
+    private String image;
+
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     List<City> cities = new ArrayList<>();
 }
