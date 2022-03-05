@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface HotelImageRepository extends JpaRepository<HotelImage, Integer> {
     List<HotelImage> findByName(String name);
+
+    List<HotelImage> findByHotelId(Integer hotelId);
 }

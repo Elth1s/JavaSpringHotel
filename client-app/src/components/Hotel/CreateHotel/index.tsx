@@ -11,9 +11,13 @@ import http from "../../../http_comon"
 import { baseURL } from "../../../http_comon"
 import { CssTextField } from "../../comon/CssTextFiled";
 
+interface IHotel {
+    name: string,
+    description: string
+}
+
 const CreateHotel: React.FC = () => {
-    const [name, setName] = useState<string>("");
-    const [description, setDescription] = useState<string>("");
+    const [hotel, setHotel] = useState<IHotel>({ name: "", description: "" });
 
     const [images, setImages] = useState<Array<string>>([]);
 
@@ -23,7 +27,7 @@ const CreateHotel: React.FC = () => {
     };
 
     const createHotel = async () => {
-        http.post("api/hotel/create", { name: name, description: description, images: images })
+        http.post("api/hotel/create", { name: hotel.name, description: hotel.description, images: images })
             .then(response => {
                 console.log(response)
             })
@@ -50,7 +54,13 @@ const CreateHotel: React.FC = () => {
                                 fullWidth
                                 type="text"
                                 label="Name"
-                                onChange={(e) => { setName(e.target.value) }}
+                                onChange={(e) => {
+                                    let data: IHotel = {
+                                        ...hotel,
+                                        name: e.target.value.toString(),
+                                    };
+                                    setHotel(data);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -58,7 +68,13 @@ const CreateHotel: React.FC = () => {
                                 fullWidth
                                 type="text"
                                 label="Description"
-                                onChange={(e) => { setDescription(e.target.value) }}
+                                onChange={(e) => {
+                                    let data: IHotel = {
+                                        ...hotel,
+                                        description: e.target.value.toString(),
+                                    };
+                                    setHotel(data);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>

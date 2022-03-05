@@ -19,7 +19,11 @@ public class HotelImage {
     private String name;
 
 
-    @ManyToOne
+    @Column(name = "hotel_id")
+    private Integer hotelId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id", nullable = false, insertable = false, updatable = false)
     private Hotel hotel;
 
     public HotelImage(String name) {
