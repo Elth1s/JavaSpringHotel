@@ -5,12 +5,55 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
+import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+
 import "cropperjs/dist/cropper.css";
 
+
+const themeL = createTheme({
+  palette: {
+    background: {
+      default: "#efeff1",
+    },
+    primary: {
+      main: "#efeff1"
+    },
+    secondary: {
+      main: "#0b0c10",
+    },
+    text: {
+      primary: "#0b0c10"
+    }
+  }
+});
+
+const themeD = createTheme({
+  palette: {
+    background: {
+      default: "#0b0c10",
+    },
+    primary: {
+      main: "#0b0c10"
+    },
+    secondary: {
+      main: "#efeff1",
+    },
+    text: {
+      primary: "#efeff1"
+    }
+  }
+});
+
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <StyledEngineProvider injectFirst>
+    <ThemeProvider theme={themeD}>
+      <CssBaseline />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
+  </StyledEngineProvider>,
   document.getElementById('root')
 );
 

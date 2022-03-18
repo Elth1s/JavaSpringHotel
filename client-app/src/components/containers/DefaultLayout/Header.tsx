@@ -2,50 +2,53 @@ import {
     AppBar,
     Avatar,
     Box,
+    Button,
     Container,
+    Divider,
     IconButton,
+    Menu,
+    MenuItem,
+    Switch,
     Toolbar,
-    Typography
+    Typography,
+    CssBaseline
 } from "@mui/material";
 import {
     Home,
     Person,
-    Login
+    Login,
+    Logout,
+    NightlightOutlined,
+    PersonOutlineOutlined
 } from "@mui/icons-material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
-interface IMenuItem {
+interface ISettingsMenuItem {
     label: string,
     icon: any,
-    link: string,
+    onClick: any,
+    switchElement: boolean
 }
 
-const menuItems: Array<IMenuItem> = [
-    {
-        label: 'Home',
-        icon: <Home />,
-        link: '/',
-    },
-    {
-        label: 'Profile',
-        icon: <Person />,
-        link: '/user/profile'
-    },
-    {
-        label: 'Admin',
-        icon: <Person />,
-        link: '/admin/countries/list'
-    }
-];
+
 
 
 const Header = () => {
     // const { LogoutUser } = useActions();
     // const { user, isAuth } = useTypedSelector((state) => state.auth);
+    const [darkTheme, setDarkTheme] = useState<boolean>(false);
 
+    const UISettings: Array<ISettingsMenuItem> = [
+        {
+            label: 'Dark theme',
+            icon: <NightlightOutlined />,
+            onClick: () => setDarkTheme((value) => !value),
+            switchElement: true
+        }
+    ];
 
     const navigate = useNavigate();
 
@@ -67,15 +70,16 @@ const Header = () => {
     }
     return (
         <Box sx={{ flexGrow: 1 }} mb={{ xs: 9, sm: 11 }}  >
-            <AppBar sx={{ background: "#18181b", borderBottom: 1, borderColor: '#45A29E' }} position="fixed" >
+            <AppBar color="primary" sx={{ borderBottom: 1, borderColor: '#45A29E' }} position="fixed" >
                 <Container sx={{ maxWidth: { xl: "xl", lg: "lg", md: "md" } }}>
                     <Toolbar style={{ paddingLeft: 0, paddingRight: 0 }}>
                         <Typography
                             component={Link} to="/"
                             variant="h4"
                             noWrap
+                            color="secondary"
                             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-                            style={{ textDecoration: 'none', color: '#55FCF1' }}
+                            style={{ textDecoration: 'none' }}
                         >
                             Hotel
                         </Typography>
@@ -83,8 +87,9 @@ const Header = () => {
                             component={Link} to="/regions/create"
                             variant="h6"
                             noWrap
+                            color="secondary"
                             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-                            style={{ textDecoration: 'none', color: '#55FCF1' }}
+                            style={{ textDecoration: 'none' }}
                         >
                             Create region
                         </Typography>
@@ -92,34 +97,28 @@ const Header = () => {
                             component={Link} to="/hotels/create"
                             variant="h6"
                             noWrap
+                            color="secondary"
                             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-                            style={{ textDecoration: 'none', color: '#55FCF1' }}
+                            style={{ textDecoration: 'none' }}
                         >
                             Create hotel
                         </Typography>
                         <Box sx={{ flexGrow: 1 }} />
 
 
-                        <IconButton
-                            sx={{ paddingRight: 0 }}
+                        <Button
+                            sx={{
+                                minWidth: 36,
+                                height: 36,
+                                p: 0,
+                                borderRadius: 2
+                            }}
                             onClick={handleClick}
                             size="small"
-                            aria-controls={open ? 'account-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
+                            color="secondary"
                         >
-                            <Avatar
-                                sx={{
-                                    width: 32,
-                                    height: 32,
-                                    color: "#55FCF1",
-                                    border: 2,
-                                    borderColor: '#45A29E'
-                                }}
-                                style={{ backgroundColor: "transparent" }}
-                            >
-                                <Person />
-                            </Avatar>
+
+                            <PersonOutlineOutlined />
                             {/* {(user.photo === "")
                                     ? <Avatar
                                         sx={{
@@ -141,12 +140,12 @@ const Header = () => {
                                             border: 2,
                                             borderColor: '#45A29E'
                                         }} src={baseURL + user.photo} />} */}
-                        </IconButton>
+                        </Button>
 
                     </Toolbar>
                 </Container>
             </AppBar>
-            {/* <Menu
+            <Menu
                 anchorEl={anchorEl}
                 id="account-menu"
                 open={open}
@@ -171,7 +170,7 @@ const Header = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <Box sx={{ my: 0.5, mb: 1.5, px: 2.5 }}>
+                {/* <Box sx={{ my: 0.5, mb: 1.5, px: 2.5 }}>
                     <Typography variant="subtitle1" noWrap sx={{ color: '#f1f1f1' }}>
                         {user.name} {user.surname}
                     </Typography>
@@ -179,38 +178,28 @@ const Header = () => {
                         {user.email}
                     </Typography>
                 </Box>
-                <Divider sx={{ my: 1, background: "#45A29E" }} />
-                {menuItems.map((option) => (
-                    option.label === "Admin" && user.roles !== "Admin"
-                        ?
-                        < MenuItem
-                            key={option.label}
-                            to={option.link}
-                            component={Link}
-                            onClick={handleClose}
-                            sx={{ py: 1, px: 2.5 }}
-                            style={{ textDecoration: 'none', color: 'unset', display: "none" }}
-                        >
-
-                        </MenuItem>
-                        :
-                        < MenuItem
-                            key={option.label}
-                            to={option.link}
-                            component={Link}
-                            onClick={handleClose}
-                            sx={{ py: 1, px: 2.5 }}
-                            style={{ textDecoration: 'none', color: 'unset' }}
-                        >
-                            <IconButton sx={{ mr: 2, width: 24, height: 24, color: "#f1f1f1" }}>
-                                {option.icon}
-                            </IconButton>
-                            <Typography variant="subtitle1" noWrap sx={{ color: '#f1f1f1' }}>
-                                {option.label}
-                            </Typography>
-                        </MenuItem>
+                <Divider sx={{ my: 1, background: "#45A29E" }} /> */}
+                {UISettings.map((option) => (
+                    <MenuItem
+                        key={option.label}
+                        onClick={() => {
+                            option.onClick
+                        }}
+                        sx={{ py: 1, px: 2.5 }}
+                        style={{ textDecoration: 'none', color: 'unset' }}
+                    >
+                        <IconButton sx={{ mr: 2, width: 24, height: 24, color: "#f1f1f1" }}>
+                            {option.icon}
+                        </IconButton>
+                        <Typography variant="subtitle1" noWrap sx={{ color: '#f1f1f1' }}>
+                            {option.label}
+                        </Typography>
+                        {option.switchElement &&
+                            <Switch checked={darkTheme} onChange={() => setDarkTheme((value) => !value)} />
+                        }
+                    </MenuItem>
                 ))}
-                <Divider sx={{ my: 1, background: "#45A29E" }} />
+                {/* <Divider sx={{ my: 1, background: "#45A29E" }} />
                 <MenuItem
                     onClick={handleLogOut}
                     sx={{ py: 1, px: 2.5 }}
@@ -222,10 +211,10 @@ const Header = () => {
                     <Typography variant="subtitle1" noWrap sx={{ color: '#f1f1f1' }}>
                         Log Out
                     </Typography>
-                </MenuItem>
-            </Menu> */}
-        </Box >
+                </MenuItem> */}
 
+            </Menu>
+        </Box >
     );
 };
 

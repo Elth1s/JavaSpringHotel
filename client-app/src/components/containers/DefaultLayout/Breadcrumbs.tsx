@@ -28,7 +28,7 @@ const Breadcrumbs = () => {
 
     return (
         <BreadcrumbsMUI aria-label="breadcrumb" sx={{ color: "#45A29E" }}>
-            <LinkRouter underline="none" color="#55FCF1" to="/">
+            <LinkRouter underline="none" color="secondary" to="/">
                 Home
             </LinkRouter>
             {pathnames.map((value, index) => {
@@ -36,11 +36,11 @@ const Breadcrumbs = () => {
                 const to = `/${pathnames.slice(0, index + 1).join('/')}`;
 
                 return last ? (
-                    <Typography color="#f1f1f1" key={to}>
+                    <Typography color="secondary" key={index}>
                         {breadcrumbNameMap[to]}
                     </Typography>
                 ) : (
-                    <LinkRouter underline="none" color="#55FCF1" to={to} key={to}>
+                    <LinkRouter underline="none" color="secondary" to={to} key={index}>
                         {breadcrumbNameMap[to]}
                     </LinkRouter>
                 );
