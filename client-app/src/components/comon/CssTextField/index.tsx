@@ -15,7 +15,7 @@ export const CssTextField = styled(TextField)({
         },
     },
     "& .MuiOutlinedInput-root": {
-        color: "#c5c6c7",
+        color: "secondary",
         "& fieldset": {
             borderColor: "#45a29e"
         },
@@ -34,8 +34,5 @@ export const CssTextField = styled(TextField)({
         "&.Mui-error:hover fieldset": {
             borderColor: "#d32f2f"
         }
-    },
-    "& .MuiIconButton-root": {
-        color: "#c5c6c7",
-    },
+    }
 });

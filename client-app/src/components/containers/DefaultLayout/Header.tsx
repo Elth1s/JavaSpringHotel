@@ -21,10 +21,12 @@ import {
     NightlightOutlined,
     PersonOutlineOutlined
 } from "@mui/icons-material";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AuthDialog from "../../comon/AuthDialog";
+import { useActions } from "../../../hooks/useActions";
+import { useTypedSelector } from "../../../hooks/useTypedSelector";
 
 interface ISettingsMenuItem {
     label: string,
@@ -35,20 +37,20 @@ interface ISettingsMenuItem {
 
 
 
-
 const Header = () => {
-    // const { LogoutUser } = useActions();
-    // const { user, isAuth } = useTypedSelector((state) => state.auth);
-    const [darkTheme, setDarkTheme] = useState<boolean>(false);
+    const { SetTheme, LogoutUser } = useActions();
+    const { darkTheme } = useTypedSelector((state) => state.ui);
+    const { user, isAuth } = useTypedSelector((state) => state.auth)
 
     const UISettings: Array<ISettingsMenuItem> = [
         {
             label: 'Dark theme',
             icon: <NightlightOutlined />,
-            onClick: () => setDarkTheme((value) => !value),
+            onClick: () => handleThemeChange(),
             switchElement: true
         }
     ];
+
 
     const navigate = useNavigate();
 
@@ -63,14 +65,19 @@ const Header = () => {
         setAnchorEl(null);
     };
 
+    const handleThemeChange = () => {
+        SetTheme(!darkTheme)
+        localStorage.darkTheme = !darkTheme;
+    };
+
     const handleLogOut = () => {
         setAnchorEl(null);
-        // LogoutUser();
+        LogoutUser();
         navigate("/");
     }
     return (
-        <Box sx={{ flexGrow: 1 }} mb={{ xs: 9, sm: 11 }}  >
-            <AppBar color="primary" sx={{ borderBottom: 1, borderColor: '#45A29E' }} position="fixed" >
+        <Box sx={{ flexGrow: 1 }} mb={{ xs: 9, sm: 11 }} >
+            <AppBar color="transparent" sx={{ borderBottom: 1, borderColor: '#45A29E' }} position="fixed" >
                 <Container sx={{ maxWidth: { xl: "xl", lg: "lg", md: "md" } }}>
                     <Toolbar style={{ paddingLeft: 0, paddingRight: 0 }}>
                         <Typography
@@ -119,27 +126,7 @@ const Header = () => {
                         >
 
                             <PersonOutlineOutlined />
-                            {/* {(user.photo === "")
-                                    ? <Avatar
-                                        sx={{
-                                            width: 32,
-                                            height: 32,
-                                            color: "#55FCF1",
-                                            border: 2,
-                                            borderColor: '#45A29E'
-                                        }}
-                                        style={{ backgroundColor: "transparent" }}
-                                    >
-                                        {user.name[0].toUpperCase()}
-                                    </Avatar>
-                                    : <Avatar alt="Image"
-                                        sx={{
-                                            width: 32,
-                                            height: 32,
-                                            color: "#55FCF1",
-                                            border: 2,
-                                            borderColor: '#45A29E'
-                                        }} src={baseURL + user.photo} />} */}
+
                         </Button>
 
                     </Toolbar>
@@ -158,7 +145,6 @@ const Header = () => {
                         filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.5))',
                         mt: 0.5,
                         minWidth: "200px",
-                        background: "#18181b",
                         '& .MuiAvatar-root': {
                             width: 32,
                             height: 32,
@@ -170,49 +156,54 @@ const Header = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                {/* <Box sx={{ my: 0.5, mb: 1.5, px: 2.5 }}>
-                    <Typography variant="subtitle1" noWrap sx={{ color: '#f1f1f1' }}>
-                        {user.name} {user.surname}
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: '#f1f1f1' }} noWrap>
-                        {user.email}
-                    </Typography>
-                </Box>
-                <Divider sx={{ my: 1, background: "#45A29E" }} /> */}
+                {isAuth &&
+                    <>
+                        <Box sx={{ my: 0.5, mb: 1.5, px: 2.5 }}>
+                            <Typography variant="subtitle1" noWrap >
+                                {user.fullname}
+                            </Typography>
+                            <Typography variant="body2" noWrap>
+                                {user.username}
+                            </Typography>
+                        </Box>
+                        <Divider sx={{ my: 1, background: "#45a29e" }} />
+                    </>
+                }
                 {UISettings.map((option) => (
                     <MenuItem
                         key={option.label}
-                        onClick={() => {
-                            option.onClick
-                        }}
+                        onClick={option.onClick}
                         sx={{ py: 1, px: 2.5 }}
                         style={{ textDecoration: 'none', color: 'unset' }}
                     >
-                        <IconButton sx={{ mr: 2, width: 24, height: 24, color: "#f1f1f1" }}>
+                        <IconButton sx={{ mr: 2, width: 24, height: 24 }}>
                             {option.icon}
                         </IconButton>
-                        <Typography variant="subtitle1" noWrap sx={{ color: '#f1f1f1' }}>
+                        <Typography variant="subtitle1" noWrap sx={{ color: 'secondary' }}>
                             {option.label}
                         </Typography>
                         {option.switchElement &&
-                            <Switch checked={darkTheme} onChange={() => setDarkTheme((value) => !value)} />
+                            <Switch checked={darkTheme} />
                         }
                     </MenuItem>
                 ))}
-                {/* <Divider sx={{ my: 1, background: "#45A29E" }} />
-                <MenuItem
-                    onClick={handleLogOut}
-                    sx={{ py: 1, px: 2.5 }}
-                    style={{ textDecoration: 'none', color: 'unset' }}
-                >
-                    <IconButton sx={{ mr: 2, width: 24, height: 24, color: "#f1f1f1" }}>
-                        <Logout />
-                    </IconButton>
-                    <Typography variant="subtitle1" noWrap sx={{ color: '#f1f1f1' }}>
-                        Log Out
-                    </Typography>
-                </MenuItem> */}
-
+                {isAuth
+                    ? <>
+                        <Divider sx={{ my: 1, background: "#45a29e" }} />
+                        <MenuItem
+                            onClick={handleLogOut}
+                            sx={{ py: 1, px: 2.5 }}
+                            style={{ textDecoration: 'none', color: 'unset' }}
+                        >
+                            <IconButton sx={{ mr: 2, width: 24, height: 24 }}>
+                                <Logout />
+                            </IconButton>
+                            <Typography variant="subtitle1" noWrap >
+                                Log Out
+                            </Typography>
+                        </MenuItem>
+                    </>
+                    : <AuthDialog />}
             </Menu>
         </Box >
     );

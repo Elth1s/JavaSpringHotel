@@ -1,6 +1,7 @@
 import {
     Container,
-    IconButton
+    IconButton,
+    Paper
 } from "@mui/material";
 import { ArrowUpward } from "@mui/icons-material";
 
@@ -33,7 +34,7 @@ const DefaultLayout: React.FC = () => {
     return (
         <>
             <Header />
-            <Container sx={{ maxWidth: { xl: "xl", lg: "lg", md: "md" } }} >
+            <Container sx={{ maxWidth: { xl: "xl", lg: "lg", md: "md" } }}>
                 <BreadCrumbs />
                 <Outlet />
                 {showButton && (

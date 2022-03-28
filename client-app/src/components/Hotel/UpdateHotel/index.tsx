@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import CropperDialog from "../../comon/CropperDialog/CropperDialog";
 import http from "../../../http_comon"
 import { baseURL } from "../../../http_comon"
-import { CssTextField } from "../../comon/CssTextFiled";
+import { CssTextField } from "../../comon/CssTextField";
 import { useNavigate, useParams } from "react-router-dom";
 import { Add, ArrowBackIosNew, ArrowForwardIos, Clear, RemoveRedEyeOutlined } from "@mui/icons-material";
 import TablePaginationActions from "../../comon/TablePaginationActions";

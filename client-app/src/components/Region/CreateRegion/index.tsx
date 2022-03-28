@@ -9,7 +9,7 @@ import { forwardRef, useEffect, useState } from "react"
 import CropperDialog from "../../comon/CropperDialog/CropperDialog";
 
 import http from "../../../http_comon"
-import { CssTextField } from "../../comon/CssTextFiled";
+import { CssTextField } from "../../comon/CssTextField";
 
 const Home: React.FC = () => {
     const [name, setName] = useState<string>("")

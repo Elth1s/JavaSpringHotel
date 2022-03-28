@@ -1,59 +1,29 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-import { createTheme, ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
 
+import './index.css';
 import "cropperjs/dist/cropper.css";
+import 'react-toastify/dist/ReactToastify.css';
 
+import App from './App';
+import { store } from './store'
+import { AuthUser } from './components/comon/AuthDialog/actions';
 
-const themeL = createTheme({
-  palette: {
-    background: {
-      default: "#efeff1",
-    },
-    primary: {
-      main: "#efeff1"
-    },
-    secondary: {
-      main: "#0b0c10",
-    },
-    text: {
-      primary: "#0b0c10"
-    }
-  }
-});
+const token = localStorage.token as string;
 
-const themeD = createTheme({
-  palette: {
-    background: {
-      default: "#0b0c10",
-    },
-    primary: {
-      main: "#0b0c10"
-    },
-    secondary: {
-      main: "#efeff1",
-    },
-    text: {
-      primary: "#efeff1"
-    }
-  }
-});
+if (token) {
+  AuthUser(token, store.dispatch);
+}
 
 ReactDOM.render(
-  <StyledEngineProvider injectFirst>
-    <ThemeProvider theme={themeD}>
-      <CssBaseline />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
-  </StyledEngineProvider>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 
