@@ -157,7 +157,7 @@ const Header = () => {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 {isAuth &&
-                    <>
+                    <Box>
                         <Box sx={{ my: 0.5, mb: 1.5, px: 2.5 }}>
                             <Typography variant="subtitle1" noWrap >
                                 {user.fullname}
@@ -167,7 +167,7 @@ const Header = () => {
                             </Typography>
                         </Box>
                         <Divider sx={{ my: 1, background: "#45a29e" }} />
-                    </>
+                    </Box>
                 }
                 {UISettings.map((option) => (
                     <MenuItem
@@ -188,7 +188,7 @@ const Header = () => {
                     </MenuItem>
                 ))}
                 {isAuth
-                    ? <>
+                    ? <Box>
                         <Divider sx={{ my: 1, background: "#45a29e" }} />
                         <MenuItem
                             onClick={handleLogOut}
@@ -202,7 +202,7 @@ const Header = () => {
                                 Log Out
                             </Typography>
                         </MenuItem>
-                    </>
+                    </Box>
                     : <AuthDialog />}
             </Menu>
         </Box >

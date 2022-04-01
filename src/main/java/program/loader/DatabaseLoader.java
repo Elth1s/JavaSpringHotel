@@ -37,7 +37,8 @@ public class DatabaseLoader implements CommandLineRunner {
             PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
             AppUser user = new AppUser();
             user.setUsername("dg646726@gmail.com");
-            user.setPassword(encoder.encode("111"));
+            user.setFullName("Dima Hladunov");
+            user.setPassword(encoder.encode("QWEqwe123_"));
             user.setRoles(Arrays.asList(
                     roleRepository.findByName(Roles.Admin)));
             this.userRepository.save(user);

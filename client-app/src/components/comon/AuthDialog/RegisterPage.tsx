@@ -5,6 +5,8 @@ import { Form, FormikProvider, useFormik } from "formik";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+
 import { useActions } from "../../../hooks/useActions";
 import { CssTextField } from "../CssTextField";
 
@@ -17,6 +19,8 @@ const RegisterPage = () => {
 
     const [showPassword, setShowPassword] = useState(false);
 
+    const { executeRecaptcha } = useGoogleReCaptcha();
+
     const navigate = useNavigate();
     const registerModel: IRegisterModel = { fullname: '', email: '', password: '' };
 
@@ -24,9 +28,13 @@ const RegisterPage = () => {
         initialValues: registerModel,
         validationSchema: RegisterSchema,
         onSubmit: async (values) => {
-            console.log(values)
+            if (!executeRecaptcha) {
+                toast.error("Captcha validation error");
+                return;
+            }
+            const reCaptchaToken = await executeRecaptcha();
             try {
-                await RegisterUser(values);
+                await RegisterUser(values, reCaptchaToken);
                 navigate("/");
             }
             catch (exeption: any) {

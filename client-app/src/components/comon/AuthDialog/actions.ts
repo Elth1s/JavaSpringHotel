@@ -37,10 +37,10 @@ export const LoginUser = (data: ILoginModel) => {
     }
 }
 
-export const RegisterUser = (data: IRegisterModel) => {
+export const RegisterUser = (data: IRegisterModel, reCaptchaToken: string) => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try {
-            let response = await http.post<string>('api/auth/register', { username: data.email, password: data.password, fullName: data.fullname })
+            let response = await http.post<string>('api/auth/register', { username: data.email, password: data.password, fullName: data.fullname, reCaptchaToken: reCaptchaToken })
             const token = response.data;
             localStorage.token = token;
             AuthUser(token, dispatch);
